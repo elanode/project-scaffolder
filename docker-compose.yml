@@ -70,7 +70,7 @@ services:
   admin:
     image: "ghcr.io/elanode/nuxt-docker-dev:latest"
     volumes:
-      - ./admin:/var/www/admin
+      - ./admin:/var/www/client
 
 volumes:
   mariadb-data:
