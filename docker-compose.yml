@@ -1,0 +1,79 @@
+version: "3"
+
+services:
+  nginx:
+    image: "ghcr.io/elanode/nginx-docker-dev:latest"
+    volumes:
+      - ./:/var/www
+      - ./docker/dev/logs/nginx:/var/log/nginx
+    ports:
+      - 3000:80 # Client UI
+      - 8000:81 # API
+      - 3001:82 # Admin UI
+    depends_on:
+      - client
+      - admin
+      - php
+
+  php:
+    image: "ghcr.io/elanode/laravel-api-docker-dev:latest"
+    volumes:
+      - ./api:/var/www/api
+    depends_on:
+      - mysql
+      - redis
+      - mailhog
+
+  supervisor:
+    image: "ghcr.io/elanode/laravel-api-docker-dev:latest"
+    volumes:
+      - ./api:/var/www/api
+      - ./docker/dev/logs/supervisor:/var/log
+    depends_on:
+      - mysql
+      - redis
+      - mailhog
+      - php
+    command: ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+  redis:
+    image: redis:6.2
+    volumes:
+      - redis:/data
+    ports:
+      - 6001:6379
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8026:8025
+
+  mysql:
+    image: mariadb:10.6
+    restart: always
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./docker/dev/mysql/dumps/:/tmp
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  client:
+    image: "ghcr.io/elanode/nuxt-docker-dev:latest"
+    volumes:
+      - ./client:/var/www/client
+
+  admin:
+    image: "ghcr.io/elanode/nuxt-docker-dev:latest"
+    volumes:
+      - ./admin:/var/www/admin
+
+volumes:
+  mariadb-data:
+    driver: local
+  redis:
+    driver: local
