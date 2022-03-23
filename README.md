@@ -9,6 +9,7 @@
 ## Installation
 
 - `make install`
+- `make up`
 - `make php`
 - `php artisan migrate:fresh --seed`
 - `php artisan passport:install`
