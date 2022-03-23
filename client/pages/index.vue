@@ -38,10 +38,13 @@ export default {
   computed: {
     loginUrl() {
       return (
-        `${this.$config.BACKEND_URL}/oauth/authorize?client_id=${this.$config.OAUTH_CLIENT_ID}&redirect_uri=${this.$config.OAUTH_REDIRECT_URI}&response_type=code&scope=*&state=` +
-        this.state +
-        '&code_challenge=' +
-        this.challenge +
+        `${this.$config.BACKEND_URL}/oauth/authorize` +
+        `?client_id=${this.$config.OAUTH_CLIENT_ID}` +
+        `&redirect_uri=${this.$config.OAUTH_REDIRECT_URI}` +
+        `&response_type=code` +
+        `&scope=*` +
+        `&state=${this.state}` +
+        `&code_challenge=${this.challenge}` +
         '&code_challenge_method=S256'
       )
     },
