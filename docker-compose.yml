@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: "ghcr.io/elanode/nginx-docker-dev:latest"
+    image: "ghcr.io/elanode/nginx-docker-dev:v1.1.2"
     volumes:
       - ./:/var/www
       - ./docker/dev/logs/nginx:/var/log/nginx
