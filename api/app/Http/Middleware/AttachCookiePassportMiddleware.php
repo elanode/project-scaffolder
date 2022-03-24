@@ -20,7 +20,10 @@ class AttachCookiePassportMiddleware
 
         if (request()->is("oauth/token")) {
             $json = json_decode($response->getContent(), false);
-            $token = $json->refresh_token;
+            if (!$json) {
+                return $response;
+            }
+            $token = $json->refresh_token ?? null;
             if ($token) {
                 return ($response)->cookie('refresh_token', $token, 15);
             }

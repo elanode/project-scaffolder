@@ -131,7 +131,10 @@ export default {
     },
 
     logout() {
-      //
+      this.$axios
+        .$post('/api/logout')
+        .then(() => (this.user = null))
+        .catch((err) => console.log(err))
     },
 
     async refreshToken() {
@@ -139,9 +142,10 @@ export default {
         const res = await this.$axios.$post('/oauth/token', {
           grant_type: 'refresh_token',
           client_id: this.$config.OAUTH_CLIENT_ID,
-          client_secret: '',
-          scope: '',
         })
+        const { token_type, expires_in, access_token, refresh_token } = res
+        this.$axios.setToken(access_token, token_type)
+
         this.refreshed = res
       } catch (err) {
         this.refreshed = err.response.data
