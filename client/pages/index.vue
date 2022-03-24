@@ -14,9 +14,34 @@
         >
           Get User
         </button>
+        <button
+          style="width: 200px; height: 150px; margin: auto"
+          @click.prevent="refreshToken()"
+        >
+          Refresh Token
+        </button>
+        <button
+          style="width: 200px; height: 150px; margin: auto"
+          @click.prevent="setStateVerifier()"
+        >
+          Set State Verifier To Login again
+        </button>
+        <button
+          style="width: 200px; height: 150px; margin: auto"
+          @click.prevent="logout()"
+        >
+          Logout
+        </button>
       </div>
     </div>
-    {{ user }}
+    <h1>user</h1>
+    : {{ user }}
+    <br />
+    <h1>firstToken</h1>
+    : {{ firstToken }}
+    <br />
+    <h1>refreshed</h1>
+    : {{ refreshed }}
   </div>
 </template>
 
@@ -32,6 +57,8 @@ export default {
       state: '',
       challenge: '',
       user: null,
+      firstToken: null,
+      refreshed: null,
     }
   },
 
@@ -49,7 +76,6 @@ export default {
       )
     },
   },
-
   mounted() {
     window.addEventListener('message', (e) => {
       if (
@@ -60,24 +86,27 @@ export default {
       }
       console.log(e.data)
       const { token_type, expires_in, access_token, refresh_token } = e.data
+      this.firstToken = e.data
       this.$axios.setToken(access_token, token_type)
 
       this.getUser()
     })
 
-    this.state = this.createRandomString(40)
-    const verifier = this.createRandomString(128)
-
-    this.challenge = this.base64Url(crypto.SHA256(verifier))
-    window.localStorage.setItem('state', this.state)
-    window.localStorage.setItem('verifier', verifier)
+    this.setStateVerifier()
   },
 
   methods: {
     openLoginWindow() {
       window.open(this.loginUrl, 'popup', 'width=700,height=700')
     },
+    setStateVerifier() {
+      this.state = this.createRandomString(40)
+      const verifier = this.createRandomString(128)
 
+      this.challenge = this.base64Url(crypto.SHA256(verifier))
+      window.localStorage.setItem('state', this.state)
+      window.localStorage.setItem('verifier', verifier)
+    },
     createRandomString(num) {
       return [...Array(num)].map(() => Math.random().toString(36)[2]).join('')
     },
@@ -99,6 +128,24 @@ export default {
         .catch((e) => {
           this.user = 'not authenticated'
         })
+    },
+
+    logout() {
+      //
+    },
+
+    async refreshToken() {
+      try {
+        const res = await this.$axios.$post('/oauth/token', {
+          grant_type: 'refresh_token',
+          client_id: this.$config.OAUTH_CLIENT_ID,
+          client_secret: '',
+          scope: '',
+        })
+        this.refreshed = res
+      } catch (err) {
+        this.refreshed = err.response.data
+      }
     },
   },
 }

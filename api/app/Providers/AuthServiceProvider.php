@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         if (!$this->app->routesAreCached()) {
             Passport::routes(null, ['middleware' => 'passport']);
+            // Passport::routes();
         }
         Passport::tokensExpireIn(now()->addMinutes(5));
         Passport::refreshTokensExpireIn(now()->addMinutes(15));

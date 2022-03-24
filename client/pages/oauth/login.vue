@@ -1,15 +1,38 @@
 <template>
-  <h1>Logging in...</h1>
+  <div>
+    <h1>Logging in...</h1>
+    errors: {{ errors }}
+    <br />
+    code: {{ code }}
+    <br />
+    state: {{ state }}
+    <br />
+    localState: {{ localState }}
+    <br />
+    localVerifier: {{ localVerifier }}
+  </div>
 </template>
 
 <script>
 export default {
   name: 'OauthSuccessPage',
+  data() {
+    return {
+      errors: null,
+      code: null,
+      state: null,
+      localState: null,
+      localVerifier: null,
+    }
+  },
   mounted() {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
     const state = urlParams.get('state')
-
+    this.code = code
+    this.state = state
+    this.localState = window.localStorage.getItem('state')
+    this.localVerifier = window.localStorage.getItem('verifier')
     if (code && state) {
       if (state === window.localStorage.getItem('state')) {
         const params = {
@@ -30,6 +53,7 @@ export default {
           })
           .catch((e) => {
             console.dir(e)
+            this.errors = e
           })
       }
     }
