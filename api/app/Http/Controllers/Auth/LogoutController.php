@@ -21,7 +21,11 @@ class LogoutController extends Controller
                 $this->revokeAccessAndRefreshTokens($token->id);
             });
 
-        return response()->json('Logged out successfully', 200);
+        return $this->successResponse(
+            data: '',
+            message: 'Logged out successfully',
+            code: 200
+        );
     }
 
     protected function revokeAccessAndRefreshTokens($tokenId)

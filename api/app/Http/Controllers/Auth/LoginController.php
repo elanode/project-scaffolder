@@ -19,6 +19,9 @@ class LoginController extends Controller
             return redirect()->intended();
         }
 
-        throw new \Exception('There was some error while trying to log you in');
+        return $this->errorResponse(
+            'Something went wrong trying to log you in',
+            500
+        );
     }
 }
