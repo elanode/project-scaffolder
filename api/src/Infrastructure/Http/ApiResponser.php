@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Traits;
+declare(strict_types=1);
 
-use Illuminate\Support\Facades\Response;
+namespace Infrastructure\Http;
+
 use Throwable;
 
-trait ResponseTrait
+class ApiResponser
 {
     /**
      * Serialize success response
@@ -18,12 +19,12 @@ trait ResponseTrait
      *
      * @return Response
      */
-    protected function successResponse($data, $message = null,  $pagination = false, $code = 200, $devMessage = null)
+    public static function successResponse($data, $message = null,  $pagination = false, $code = 200, $devMessage = null)
     {
         $others = [];
 
         if ($pagination) {
-            $meta = $this->handlePaginationData($data);
+            $meta = self::handlePaginationData($data);
             $others['meta'] = $meta;
         }
 
@@ -42,7 +43,7 @@ trait ResponseTrait
         return response()->json($response, $code);
     }
 
-    protected function errorResponse($message = null, $code = 500, $devMessage = null)
+    public static function errorResponse($message = null, $code = 500, $devMessage = null)
     {
         $response = [
             'status'  => 'error',
@@ -58,7 +59,7 @@ trait ResponseTrait
         return response()->json($response, $code);
     }
 
-    protected function throwableResponse(Throwable $error, $code = 500, $data = null, $devMessage = null)
+    public static function throwableResponse(Throwable $error, $code = 500, $data = null, $devMessage = null)
     {
         $message = $error->getMessage();
         $overrideCode = null;
