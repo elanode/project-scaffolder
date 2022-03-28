@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Http;
+namespace App\Traits;
 
 use Throwable;
 
-class ApiResponser
+trait ApiResponserTrait
 {
     /**
      * Serialize success response
@@ -19,12 +19,12 @@ class ApiResponser
      *
      * @return Response
      */
-    public static function successResponse($data, $message = null,  $pagination = false, $code = 200, $devMessage = null)
+    public function successResponse($data, $message = null,  $pagination = false, $code = 200, $devMessage = null)
     {
         $others = [];
 
         if ($pagination) {
-            $meta = self::handlePaginationData($data);
+            $meta = $this->handlePaginationData($data);
             $others['meta'] = $meta;
         }
 
@@ -43,7 +43,7 @@ class ApiResponser
         return response()->json($response, $code);
     }
 
-    public static function errorResponse($message = null, $code = 500, $devMessage = null)
+    public function errorResponse($message = null, $code = 500, $devMessage = null)
     {
         $response = [
             'status'  => 'error',
@@ -59,7 +59,7 @@ class ApiResponser
         return response()->json($response, $code);
     }
 
-    public static function throwableResponse(Throwable $error, $code = 500, $data = null, $devMessage = null)
+    public function throwableResponse(Throwable $error, $code = 500, $data = null, $devMessage = null)
     {
         $message = $error->getMessage();
         $overrideCode = null;
@@ -85,7 +85,7 @@ class ApiResponser
         return response()->json($response, (int)$code == 0 ? 500 : (int)$code);
     }
 
-    private function handlePaginationData($data)
+    private static function handlePaginationData($data)
     {
         return [
             'total'        => $data->resource->total(),

@@ -13,7 +13,7 @@
 - `make php`
 - `php artisan migrate:fresh --seed`
 - `php artisan passport:install`
-- `php artisan passport:install --public`
+- `php artisan passport:client --public`
   - [prompts] which user ... `1` (this is the superadmin id based on the users database)
   - [prompts] should name client ... `Nuxt Client App` (the name of the new consumer client)
   - [prompts] redirect request after auth ... `http://localhost:3000/oauth/login` (the redirect uri of consumer client used for logging in, setting cookies, etc)
