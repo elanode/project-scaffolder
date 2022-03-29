@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Domains\Shared\Models\User;
+use App\Domains\Authentication\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 

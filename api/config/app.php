@@ -178,9 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /**
-         * Domain Service Providers
-         */
-        App\Domains\Shared\SharedDomainServiceProvider::class
+     * Domain Service Providers
+     */
     ],
 
     /*

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Shared\Models;
+namespace App\Domains\Authentication\Models;
 
 use App\Traits\HasUuid\HasUuidTrait;
 use Database\Factories\UserFactory;
@@ -52,7 +52,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function newFactory()
+    protected static function newFactory(): UserFactory
     {
         return new UserFactory();
     }
