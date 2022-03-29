@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\V1\Auth\LogoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

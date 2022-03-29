@@ -2,9 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Domains\Authentication\Exceptions\UserActionException;
+use App\Domains\Authentication\Exceptions\UserDtoException;
 use App\Support\Http\ApiResponserTrait;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -38,9 +44,26 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
+
+        /** CUSTOM */
+        $this->renderable(fn (UserDtoException $e, $request) => $this->throwableResponse($e));
+        $this->renderable(fn (UserActionException $e, $request) => $this->throwableResponse($e));
+
+        /** BUILT IN */
+        $this->renderable(fn (AuthorizationException $e, $request) => $this->throwableResponse($e, $e->getCode()));
+        $this->renderable(fn (ModelNotFoundException $e, $request) => $this->throwableResponse($e, $e->getCode()));
+        $this->renderable(fn (NotFoundHttpException $e, $request) => $this->errorResponse('Route not found', 404));
+
+        $this->renderable(
+            fn (ValidationException $e, $request) => $this->throwableResponse(
+                error: $e,
+                code: 422,
+                data: $e->validator->getMessageBag()
+            )
+        );
 
         $this->renderable(function (QueryException $e, $request) {
             if (config('app.env') != 'local') {

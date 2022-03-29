@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Support\Http;
 
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 trait ApiResponserTrait
@@ -11,15 +12,15 @@ trait ApiResponserTrait
     /**
      * Serialize success response
      *
-     * @param mixed $data
-     * @param string $message
-     * @param bool $pagination
-     * @param int $code
-     * @param string $devMessage
+     * @param mixed       $data
+     * @param null|string $message
+     * @param bool        $pagination
+     * @param int         $code
+     * @param null|string $devMessage
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function successResponse($data, $message = null,  $pagination = false, $code = 200, $devMessage = null)
+    public function successResponse(mixed $data, null|string $message = null, bool $pagination = false, int $code = 200, null|string $devMessage = null)
     {
         $others = [];
 
@@ -43,7 +44,16 @@ trait ApiResponserTrait
         return response()->json($response, $code);
     }
 
-    public function errorResponse($message = null, $code = 500, $devMessage = null)
+    /**
+     * Error specific response
+     *
+     * @param  null|string $message
+     * @param  int         $code
+     * @param  null|string $devMessage
+     *
+     * @return JsonResponse
+     */
+    public function errorResponse(null|string $message = 'adf', int $code = 500, null|string $devMessage = null)
     {
         $response = [
             'status'  => 'error',
@@ -59,8 +69,22 @@ trait ApiResponserTrait
         return response()->json($response, $code);
     }
 
-    public function throwableResponse(Throwable $error, $code = 500, $data = null, $devMessage = null)
-    {
+    /**
+     * Automatic throwable response
+     *
+     * @param  Throwable   $error
+     * @param  int         $code
+     * @param  mixed       $data
+     * @param  null|string $devMessage
+     *
+     * @return JsonResponse
+     */
+    public function throwableResponse(
+        Throwable $error,
+        int|string $code = 500,
+        mixed $data = null,
+        null|string $devMessage = null
+    ) {
         $message = $error->getMessage();
         $overrideCode = null;
         if (config('app.debug') == false) {
@@ -71,11 +95,20 @@ trait ApiResponserTrait
             }
         }
 
+        $targetCode = null;
+        if ($overrideCode == null) {
+            if ($error->getCode() == 0) {
+                $targetCode = $code;
+            } else {
+                $targetCode = $error->getCode();
+            }
+        }
+
         $response = [
             'status'  => 'error',
             'message' => $message,
             'data'    => $data,
-            'code'    =>  $overrideCode == null ? $error->getCode() : $overrideCode,
+            'code'    => $targetCode == null ? $overrideCode : $targetCode,
         ];
 
         if (config('app.env') != 'production') {

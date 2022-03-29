@@ -8,6 +8,6 @@ class UserDtoException extends Exception
 {
     public static function missingAttribute(string $attribute): static
     {
-        return new static("Missing attribute when creating user dto [$attribute]");
+        return new static("Missing attribute when creating user dto [$attribute]", 500);
     }
 }

@@ -1,9 +1,8 @@
 <?php
 
-namespace Domain\Authentication\Requests;
+namespace App\Domains\Authentication\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
 
 class LoginUserRequest extends FormRequest
 {

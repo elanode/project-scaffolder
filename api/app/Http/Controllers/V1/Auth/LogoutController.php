@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Domains\Authentication\Actions\LogoutUserAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         LogoutUserAction::run($request->user());
 
