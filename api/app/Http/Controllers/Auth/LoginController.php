@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Domains\Authentication\Actions\AttemptLoginUserAction;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -15,7 +16,10 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if (auth()->guard()->attempt($request->only('email', 'password'))) {
+        if (AttemptLoginUserAction::run(
+            $request->get('email'),
+            $request->get('password')
+        )) {
             return redirect()->intended();
         }
 
