@@ -1,6 +1,6 @@
 <?php
 
-namespace Domains\Authentication\Actions;
+namespace App\Domains\Authentication\Actions;
 
 use App\Domains\Authentication\Models\User;
 use Illuminate\Http\Request;

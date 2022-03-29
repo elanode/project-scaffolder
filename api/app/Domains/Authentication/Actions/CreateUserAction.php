@@ -1,9 +1,9 @@
 <?php
 
-namespace Domains\Authentication\Actions;
+namespace App\Domains\Authentication\Actions;
 
 use App\Domains\Authentication\Models\User;
-use Domains\Authentication\Dtos\UserDto;
+use App\Domains\Authentication\Dtos\UserDto;
 
 class CreateUserAction
 {

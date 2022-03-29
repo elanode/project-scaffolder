@@ -1,9 +1,9 @@
 <?php
 
-namespace Domains\Authentication\Factories;
+namespace App\Domains\Authentication\Factories;
 
 use Domain\Authentication\Requests\UserRequest;
-use Domains\Authentication\Dtos\UserDto;
+use App\Domains\Authentication\Dtos\UserDto;
 
 class UserDataFactory
 {

@@ -1,8 +1,6 @@
 <?php
 
-namespace Domains\Authentication\Actions;
-
-use Illuminate\Http\Request;
+namespace App\Domains\Authentication\Actions;
 
 class AttemptLoginUserAction
 {

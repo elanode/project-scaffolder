@@ -1,8 +1,8 @@
 <?php
 
-namespace Domains\Authentication\Dtos;
+namespace App\Domains\Authentication\Dtos;
 
-use Domains\Authentication\Exceptions\UserDtoException;
+use App\Domains\Authentication\Exceptions\UserDtoException;
 
 class UserDto
 {

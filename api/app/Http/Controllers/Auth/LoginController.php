@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Domains\Authentication\Actions\AttemptLoginUserAction;
+use App\Domains\Authentication\Actions\AttemptLoginUserAction;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
