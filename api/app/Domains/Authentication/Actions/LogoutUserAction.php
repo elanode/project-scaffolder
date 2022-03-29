@@ -11,11 +11,11 @@ class LogoutUserAction
     {
         $user->tokens
             ->each(function ($token, $key) {
-                $this->revokeAccessAndRefreshTokens($token->id);
+                self::revokeAccessAndRefreshTokens($token->id);
             });
     }
 
-    protected function revokeAccessAndRefreshTokens($tokenId): void
+    protected static function revokeAccessAndRefreshTokens($tokenId): void
     {
         $tokenRepository = app('Laravel\Passport\TokenRepository');
         $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');

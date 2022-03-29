@@ -8,5 +8,5 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
 
-    Route::post('/logout',  App\Http\Controllers\V1\Auth\LogoutController::class);
+    Route::post('/logout',  App\Http\Controllers\V1\Authentication\LogoutController::class);
 });
