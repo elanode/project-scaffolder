@@ -7,7 +7,7 @@ use App\Domains\Authentication\Dtos\UserDto;
 
 class CreateUserAction
 {
-    public static function run(UserDto $userDto): User
+    public function run(UserDto $userDto): User
     {
         $user = User::create($userDto->toArray());
 

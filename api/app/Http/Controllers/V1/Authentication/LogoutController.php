@@ -9,9 +9,13 @@ use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
+    public function __construct(
+        protected LogoutUserAction $logoutUserAction
+    ) {
+    }
     public function __invoke(Request $request): JsonResponse
     {
-        LogoutUserAction::run($request->user());
+        $this->logoutUserAction->run($request->user());
 
         return $this->successResponse(
             data: '',

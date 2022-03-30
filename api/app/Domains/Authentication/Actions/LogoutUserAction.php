@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 
 class LogoutUserAction
 {
-    public static function run(User $user): void
+    public function run(User $user): void
     {
         $user->tokens
             ->each(function ($token, $key) {
-                self::revokeAccessAndRefreshTokens($token->id);
+                $this->revokeAccessAndRefreshTokens($token->id);
             });
     }
 
-    protected static function revokeAccessAndRefreshTokens($tokenId): void
+    protected function revokeAccessAndRefreshTokens($tokenId): void
     {
         $tokenRepository = app('Laravel\Passport\TokenRepository');
         $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');

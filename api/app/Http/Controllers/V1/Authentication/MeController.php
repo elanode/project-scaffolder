@@ -10,9 +10,14 @@ use Illuminate\Http\Request;
 
 class MeController extends Controller
 {
+    public function __construct(
+        protected GetCurrentUserAction $getCurrentUserAction
+    ) {
+    }
+
     public function __invoke(Request $request): JsonResponse
     {
-        $user = GetCurrentUserAction::run($request);
+        $user = $this->getCurrentUserAction->run($request);
 
         return $this->successResponse(
             data: new UserResource($user)

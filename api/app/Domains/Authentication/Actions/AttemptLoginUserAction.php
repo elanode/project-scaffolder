@@ -15,7 +15,7 @@ class AttemptLoginUserAction
      * @return bool
      * @throws UserActionException ::invalidLoginCredentials
      */
-    public static function run(string $email, string $password): bool
+    public function run(string $email, string $password): bool
     {
         $pass =  auth()->guard()->attempt([
             'email' => $email,

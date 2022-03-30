@@ -14,7 +14,7 @@ class GetCurrentUserAction
      *
      * @return User
      */
-    public static function run(Request $request): User
+    public function run(Request $request): User
     {
         $user = $request->user();
 

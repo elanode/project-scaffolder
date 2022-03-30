@@ -7,7 +7,7 @@ use App\Domains\Authentication\Dtos\UserDto;
 
 class UpdateUserAction
 {
-    public static function run(int $id, UserDto $userDto): User
+    public function run(int $id, UserDto $userDto): User
     {
         $user = User::findOrFail($id);
 

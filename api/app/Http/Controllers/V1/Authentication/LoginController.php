@@ -10,9 +10,13 @@ use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
+    public function __construct(protected AttemptLoginUserAction $attemptLoginUserAction)
+    {
+    }
+
     public function __invoke(LoginUserRequest $request): RedirectResponse|JsonResponse
     {
-        if (AttemptLoginUserAction::run(
+        if ($this->attemptLoginUserAction->run(
             $request->get('email'),
             $request->get('password')
         )) {
