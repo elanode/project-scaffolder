@@ -12,11 +12,14 @@ class GetCurrentUserAction
      *
      * @param  Request $request
      *
-     * @return User
+     * @return User|null
      */
-    public function run(Request $request): User
+    public function run(Request $request): ?User
     {
         $user = $request->user();
+        if (!$user) {
+            return null;
+        }
 
         // load relationships
 
