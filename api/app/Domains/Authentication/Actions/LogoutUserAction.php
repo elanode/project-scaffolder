@@ -4,6 +4,8 @@ namespace App\Domains\Authentication\Actions;
 
 use App\Domains\Authentication\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Passport\RefreshTokenRepository;
+use Laravel\Passport\TokenRepository;
 
 class LogoutUserAction
 {
@@ -17,7 +19,9 @@ class LogoutUserAction
 
     protected function revokeAccessAndRefreshTokens($tokenId): void
     {
+        /** @var TokenRepository */
         $tokenRepository = app('Laravel\Passport\TokenRepository');
+        /** @var RefreshTokenRepository */
         $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');
 
         $tokenRepository->revokeAccessToken($tokenId);
