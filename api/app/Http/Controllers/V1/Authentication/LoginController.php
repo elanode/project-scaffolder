@@ -7,6 +7,7 @@ use App\Domains\Authentication\Actions\AttemptLoginUserAction;
 use App\Domains\Authentication\Requests\LoginUserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Throwable;
 
 class LoginController extends Controller
 {
@@ -16,16 +17,15 @@ class LoginController extends Controller
 
     public function __invoke(LoginUserRequest $request): RedirectResponse|JsonResponse
     {
-        if ($this->attemptLoginUserAction->run(
-            $request->get('email'),
-            $request->get('password')
-        )) {
-            return redirect()->intended();
+        try {
+            $this->attemptLoginUserAction->run(
+                $request->get('email'),
+                $request->get('password')
+            );
+        } catch (Throwable $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return $this->errorResponse(
-            'Something went wrong trying to log you in',
-            500
-        );
+        return redirect()->intended();
     }
 }
