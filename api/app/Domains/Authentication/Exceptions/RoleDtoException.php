@@ -4,10 +4,10 @@ namespace App\Domains\Authentication\Exceptions;
 
 use App\Infrastructure\Exceptions\BaseDtoException;
 
-class UserDtoException extends BaseDtoException
+class RoleDtoException extends BaseDtoException
 {
     protected static function getDtoName(): string
     {
-        return 'User';
+        return 'Role';
     }
 }
