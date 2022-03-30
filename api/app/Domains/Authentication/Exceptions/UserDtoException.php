@@ -2,12 +2,9 @@
 
 namespace App\Domains\Authentication\Exceptions;
 
-use Exception;
+use App\Infrastructure\Exceptions\BaseDtoException;
 
-class UserDtoException extends Exception
+class UserDtoException extends BaseDtoException
 {
-    public static function missingAttribute(string $attribute): static
-    {
-        return new static("Missing required attribute when creating user dto [$attribute]", 500);
-    }
+    protected static $dtoName = 'User';
 }
