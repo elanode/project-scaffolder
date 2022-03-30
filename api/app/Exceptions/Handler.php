@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Domains\Authentication\Exceptions\RoleDtoException;
 use App\Domains\Authentication\Exceptions\UserActionException;
 use App\Domains\Authentication\Exceptions\UserDtoException;
+use App\Infrastructure\Exceptions\BaseCustomException;
 use App\Support\Http\ApiResponserTrait;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -44,13 +46,11 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        // $this->reportable(function (Throwable $e) {
-        //     //
-        // });
+        // $this->reportable(function (Throwable $e) {});
 
         /** CUSTOM */
-        $this->renderable(fn (UserDtoException $e, $request) => $this->throwableResponse($e));
-        $this->renderable(fn (UserActionException $e, $request) => $this->throwableResponse($e));
+        // $this->renderable(fn (UserActionException $e, $request) => $this->throwableResponse($e));
+        $this->renderable(fn (BaseCustomException $e, $request) => $this->throwableResponse($e));
 
         /** BUILT IN */
         $this->renderable(fn (AuthorizationException $e, $request) => $this->throwableResponse($e, $e->getCode()));

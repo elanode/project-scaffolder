@@ -4,7 +4,7 @@ namespace App\Infrastructure\Exceptions;
 
 use Exception;
 
-abstract class BaseDtoException extends Exception
+abstract class BaseDtoException extends BaseCustomException
 {
     public static function missingAttribute(string $attribute): static
     {
