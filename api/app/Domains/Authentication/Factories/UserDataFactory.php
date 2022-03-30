@@ -2,8 +2,8 @@
 
 namespace App\Domains\Authentication\Factories;
 
-use Domain\Authentication\Requests\UserRequest;
 use App\Domains\Authentication\Dtos\UserDto;
+use App\Domains\Authentication\Requests\UserRequest;
 
 class UserDataFactory
 {
