@@ -10,19 +10,19 @@ class UserDataFactory
     public static function fromArray(
         array $array
     ): UserDto {
-        $collect = collect($array);
+        $data = (object) $array;
 
         return new UserDto(
-            name: $collect->name,
-            email: $collect->email,
-            password: $collect->password
+            name: $data->name,
+            email: $data->email,
+            password: $data->password
         );
     }
 
     public static function fromRequest(
         UserFormRequest $request
     ): UserDto {
-        $validated = collect($request->validated());
+        $validated = (object) $request->validated();
 
         return new UserDto(
             name: $validated->name,
