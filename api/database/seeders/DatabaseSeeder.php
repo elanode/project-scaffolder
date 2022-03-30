@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Domains\Authentication\Models\User;
+use App\Domains\Authentication\Seeders\UserFakeSeeder;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,13 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Superadmin',
-            'email' => 'superadmin@test.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('123123123')
+        $this->call([
+            UserFakeSeeder::class
         ]);
-
-        User::factory(10)->create();
     }
 }
