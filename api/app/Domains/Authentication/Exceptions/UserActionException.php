@@ -2,9 +2,9 @@
 
 namespace App\Domains\Authentication\Exceptions;
 
-use Exception;
+use App\Infrastructure\Exceptions\BaseActionException;
 
-class UserActionException extends Exception
+class UserActionException extends BaseActionException
 {
     public static function invalidLoginCredentials(): static
     {
