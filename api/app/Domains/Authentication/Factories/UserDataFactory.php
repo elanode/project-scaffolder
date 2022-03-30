@@ -3,7 +3,7 @@
 namespace App\Domains\Authentication\Factories;
 
 use App\Domains\Authentication\Dtos\UserDto;
-use App\Domains\Authentication\Requests\UserRequest;
+use App\Domains\Authentication\Requests\UserFormRequest;
 
 class UserDataFactory
 {
@@ -20,7 +20,7 @@ class UserDataFactory
     }
 
     public static function fromRequest(
-        UserRequest $request
+        UserFormRequest $request
     ): UserDto {
         $validated = collect($request->validated());
 
