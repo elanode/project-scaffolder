@@ -28,6 +28,21 @@ class UserDataFactoryTest extends TestCase
         $this->assertTrue($userDto->password === '::password::');
     }
 
+    public function test_it_can_create_user_dto_from_array_with_password_missing()
+    {
+        $data = [
+            'name' => '::name::',
+            'email' => '::email::',
+        ];
+
+        $userDto = UserDataFactory::fromArray($data);
+
+        $this->assertInstanceOf(UserDto::class, $userDto);
+        $this->assertTrue($userDto->name === '::name::');
+        $this->assertTrue($userDto->email === '::email::');
+        $this->assertTrue($userDto->password === null);
+    }
+
     public function test_it_can_create_user_dto_from_form_request()
     {
         $userDto = UserDataFactory::fromRequest($this->mockUserFormRequest());

@@ -15,7 +15,7 @@ class UserDataFactory
         return new UserDto(
             name: $data->name,
             email: $data->email,
-            password: $data->password
+            password: $data->password ?? null
         );
     }
 
