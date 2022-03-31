@@ -23,6 +23,8 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+    public $guard_name = '*';
+
     protected $table = 'users';
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Domains\Authentication\Models;
 
 class Permission extends \Spatie\Permission\Models\Permission
 {

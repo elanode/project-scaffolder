@@ -3,9 +3,9 @@
 namespace App\Domains\Authentication\Seeders;
 
 use App\Domains\Authentication\Enums\RoleEnum;
+use App\Domains\Authentication\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         collect(RoleEnum::cases())->each(function ($role) {
-            Role::create(['name' => $role, 'guard_name' => '*']);
+            Role::create(['name' => $role->value, 'guard_name' => '*']);
         });
     }
 }
