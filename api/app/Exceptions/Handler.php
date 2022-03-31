@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
         /** BUILT IN */
         $this->renderable(fn (AuthorizationException $e, $request) => $this->throwableResponse($e, $e->getCode()));
         $this->renderable(fn (ModelNotFoundException $e, $request) => $this->throwableResponse($e, $e->getCode()));
-        $this->renderable(fn (NotFoundHttpException $e, $request) => $this->errorResponse('Route not found', 404));
+        $this->renderable(fn (NotFoundHttpException $e, $request) => $this->errorResponse('Resource not found', 404));
 
         $this->renderable(
             fn (ValidationException $e, $request) => $this->throwableResponse(
@@ -65,16 +65,18 @@ class Handler extends ExceptionHandler
             )
         );
 
-        $this->renderable(function (QueryException $e, $request) {
+        $this->renderable(function (\PDOException $e, $request) {
             if (config('app.env') != 'local') {
                 return $this->errorResponse('Something went wrong, please try again later.', 500);
             }
         });
 
-        $this->renderable(function (\PDOException $e, $request) {
-            if (config('app.env') != 'local') {
-                return $this->errorResponse('Something went wrong, please try again later.', 500);
+        $this->renderable(function (Throwable $e, $request) {
+            if ($e->getCode() < 500) {
+                return $this->throwableResponse($e);
             }
+
+            return $this->errorResponse('Something went wrong, please try again later.', 500);
         });
     }
 }
