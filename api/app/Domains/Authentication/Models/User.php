@@ -15,7 +15,9 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles;
+    use HasRoles {
+        hasPermissionTo as hasPermissionToOriginal;
+    }
     use HasUuidTrait;
     use HasApiTokens;
     use HasFactory;
@@ -61,5 +63,15 @@ class User extends Authenticatable
     protected static function newFactory(): UserFactory
     {
         return new UserFactory();
+    }
+
+    protected function getDefaultGuardName(): string
+    {
+        return '*';
+    }
+
+    public function hasPermissionTo($permission, $guardName = '*'): bool
+    {
+        return $this->hasPermissionToOriginal($permission, $guardName);
     }
 }

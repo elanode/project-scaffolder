@@ -17,8 +17,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         collect(RoleEnum::cases())->each(function ($role) {
-            Role::create(['name' => $role, 'guard_name' => 'api']);
-            Role::create(['name' => $role, 'guard_name' => 'web']);
+            Role::create(['name' => $role, 'guard_name' => '*']);
         });
     }
 }
