@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Authentication\Models;
 
-use App\Traits\HasUuid\HasUuidTrait;
+use App\Support\Traits\HasUuid\HasUuidTrait;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\HasUuid;
+namespace App\Support\Traits\HasUuid;
 
 use Illuminate\Support\Str;
 
