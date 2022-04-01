@@ -12,7 +12,7 @@
 - `make php`
 - `php artisan migrate:fresh --seed`
 - `php artisan passport:install`
-- `php artisan passport:client --public`
+- `php artisan passport:client --public` (IF NOT SEEDED, check [`DatabaseSeeder.php`](./api/database/seeders/DatabaseSeeder.php))
   - [prompts] which user ... `1` (this is the superadmin id based on the users database)
   - [prompts] should name client ... `Nuxt Client App` (the name of the new consumer client)
   - [prompts] redirect request after auth ... `http://localhost:3000/oauth/login` (the redirect uri of consumer client used for logging in, setting cookies, etc)
@@ -58,18 +58,6 @@ Here we put all the _Exceptions_ needed for this domain. All **Exception** must 
 
 Here we put all the _Factories_ for creating the _DTO_. This factory classes must contains `fromArray` and `fromRequest` methods. See one of the example in the Authentication Domain.
 
-#### `Domains/[domain_name]/Models/` >>> [jump link for example🚀](./api/app/Domains/Authentication/Models/)
+#### `Domains/[domain_name]/*` 
 
-Just moving the default _Models_ folder created by Laravel to here, seperated by the domains. So if there's another domain, it should contain this directory there.
-
-#### `Domains/[domain_name]/Requests/` >>> [jump link for example🚀](./api/app/Domains/Authentication/Requests/)
-
-Just moving the default _Requests_ folder created by Laravel to here, seperated by the domains. So if there's another domain, it should contain this directory there.
-
-#### `Domains/[domain_name]/Resources/` >>> [jump link for example🚀](./api/app/Domains/Authentication/Resources/)
-
-Just moving the default _Requests_ folder created by Laravel to here, seperated by the domains. So if there's another domain, it should contain this directory there.
-
-#### `Domains/[domain_name]/Seeders/` >>> [jump link🚀](./api/app/Domains/Authentication/Seeders/)
-
-Just moving the default _Seeders_ folder created by Laravel to here, seperated by the domains. So if there's another domain, it should contain this directory there.
+All laravel default directories (e.g. events, listeners, models, etc.) related to its domain needs are in here.
