@@ -70,13 +70,5 @@ class Handler extends ExceptionHandler
                 return $this->errorResponse('Something went wrong, please try again later.', 500);
             }
         });
-
-        $this->renderable(function (Throwable $e, $request) {
-            if ($e->getCode() < 500) {
-                return $this->throwableResponse($e);
-            }
-
-            return $this->errorResponse('Something went wrong, please try again later.', 500);
-        });
     }
 }

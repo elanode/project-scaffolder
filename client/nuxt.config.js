@@ -8,6 +8,10 @@ export default {
     BROWSER_URL: process.env.BROWSER_URL,
     BACKEND_URL: process.env.BACKEND_URL,
     BASE_URL: process.env.BASE_URL,
+    WS_HOST: process.env.WS_HOST,
+    WS_PORT: process.env.WS_PORT,
+    WS_KEY: process.env.WS_KEY,
+    WS_FORCE_TLS: process.env.WS_FORCE_TLS,
   },
 
   privateRuntimeConfig: {
@@ -35,7 +39,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/echo', mode: 'client' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

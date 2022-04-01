@@ -18,7 +18,7 @@
           style="width: 200px; height: 150px; margin: auto"
           @click.prevent="refreshToken()"
         >
-          Refresh Token
+          Refresh and Set Token
         </button>
         <button
           style="width: 200px; height: 150px; margin: auto"
@@ -34,6 +34,7 @@
         </button>
       </div>
     </div>
+    <hr />
     <h1>user</h1>
     : {{ user }}
     <br />
@@ -42,11 +43,52 @@
     <br />
     <h1>refreshed</h1>
     : {{ refreshed }}
+    <hr />
+    <hr />
+    <h1>Websockets</h1>
+    <a
+      :href="`${$config.BACKEND_URL}/api/test-broadcast?message=HelloWorld`"
+      target="_blank"
+      >Click me for broadcast
+    </a>
+    <br />
+    {{ `${$config.BACKEND_URL}/api/test-broadcast?message=HelloWorld` }}
+    <p>Received Messages:</p>
+    <ul>
+      <li v-for="(message, index) in messages" :key="index">
+        {{ message }}
+      </li>
+    </ul>
+    <hr />
+    <button
+      style="width: 200px; height: 150px; margin: auto"
+      @click.prevent="initPrivate()"
+    >
+      Init Private Channel
+    </button>
+    <a :href="`${$config.BACKEND_URL}/api/test-private`" target="_blank"
+      >Click me for broadcast
+    </a>
+    <p>
+      (mustlogin first with user id 1 (superadmin@test.com), then click init
+      private channel)
+    </p>
+    <p>Received Private Messages:</p>
+    <ul>
+      <li v-for="(message, index) in privateMessages" :key="`private-${index}`">
+        {{ message }}
+      </li>
+    </ul>
+    <br />
+    <br />
+    <br />
   </div>
 </template>
 
 <script>
 import crypto from 'crypto-js'
+import Echo from 'laravel-echo'
+
 // https://dev.to/stefant123/pkce-authenticaton-for-nuxt-spa-with-laravel-as-backend-170n
 export default {
   name: 'IndexPage',
@@ -59,6 +101,8 @@ export default {
       user: null,
       firstToken: null,
       refreshed: null,
+      messages: [],
+      privateMessages: [],
     }
   },
 
@@ -88,14 +132,59 @@ export default {
       const { token_type, expires_in, access_token, refresh_token } = e.data
       this.firstToken = e.data
       this.$axios.setToken(access_token, token_type)
+      window.localStorage.setItem('token_access', access_token)
 
       this.getUser()
     })
 
     this.setStateVerifier()
+
+    this.listenWs()
+  },
+  beforeDestroy() {
+    this.$echo.leave('public_channel')
+    this.$echo.leave('user.' + this.user?.data?.id)
   },
 
   methods: {
+    listenWs() {
+      console.log(this.$echo)
+      this.$echo.channel('public_channel').listen('.testing_public', (e) => {
+        console.log(e)
+        this.messages.push(e.message)
+      })
+    },
+    initPrivate() {
+      if (!this.user?.data?.id) {
+        this.privateMessages.push('UNAUTHENTICATED')
+        return
+      }
+
+      window.echo = new Echo({
+        broadcaster: 'pusher',
+        key: this.$config.WS_KEY, // key
+        wsHost: this.$config.WS_HOST, // localhost
+        wsPort: this.$config.WS_PORT, // 3003
+        forceTLS: this.$config.WS_FORCE_TLS, // false
+        disableStats: true,
+        authEndpoint: `${this.$config.BASE_URL}/broadcasting/auth`,
+        auth: {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              'token_access'
+            )}`,
+            Accept: 'application/json',
+          },
+        },
+      })
+
+      window.echo
+        .private('user.' + this.user.data.id)
+        .listen('.testing_private', (e) => {
+          console.log(e)
+          this.privateMessages.push(e.message)
+        })
+    },
     openLoginWindow() {
       window.open(this.loginUrl, 'popup', 'width=700,height=700')
     },
@@ -145,6 +234,7 @@ export default {
         })
         const { token_type, expires_in, access_token, refresh_token } = res
         this.$axios.setToken(access_token, token_type)
+        window.localStorage.setItem('token_access', access_token)
 
         this.refreshed = res
       } catch (err) {
