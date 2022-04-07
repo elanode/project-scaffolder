@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Infrastructure\Exceptions;
 
 use App\Domains\Authentication\Exceptions\RoleDtoException;
 use App\Domains\Authentication\Exceptions\UserActionException;
