@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Infrastructure\Http;
 
 use App\Support\Http\ApiResponserTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

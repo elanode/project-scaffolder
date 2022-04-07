@@ -7,6 +7,7 @@ use App\Domains\Authentication\Exceptions\UserActionException;
 use App\Domains\Authentication\Exceptions\UserDtoException;
 use App\Infrastructure\Exceptions\BaseCustomException;
 use App\Support\Http\ApiResponserTrait;
+use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -68,6 +69,12 @@ class Handler extends ExceptionHandler
         $this->renderable(function (\PDOException $e, $request) {
             if (config('app.env') != 'local') {
                 return $this->errorResponse('Something went wrong, please try again later.', 500);
+            }
+        });
+
+        $this->renderable(function (Exception $e, $request) {
+            if (config('app.env') != 'local') {
+                return $this->errorResponse($e->getMessage() ?? 'Something went wrong', $e->getCode());
             }
         });
     }

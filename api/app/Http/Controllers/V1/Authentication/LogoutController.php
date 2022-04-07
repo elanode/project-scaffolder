@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\V1\Authentication;
 
-use App\Http\Controllers\Controller;
 use App\Domains\Authentication\Actions\LogoutUserAction;
+use App\Infrastructure\Http\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

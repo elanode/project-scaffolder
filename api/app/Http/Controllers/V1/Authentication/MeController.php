@@ -4,7 +4,7 @@ namespace App\Http\Controllers\V1\Authentication;
 
 use App\Domains\Authentication\Actions\GetCurrentUserAction;
 use App\Domains\Authentication\Resources\UserResource;
-use App\Http\Controllers\Controller;
+use App\Infrastructure\Http\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

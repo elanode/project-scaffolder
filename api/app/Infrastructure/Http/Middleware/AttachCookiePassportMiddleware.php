@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Infrastructure\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 
-class ReadCookiePassportMiddleware
+class AttachCookiePassportMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,18 @@ class ReadCookiePassportMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        $response = $next($request);
+
         if (request()->is("oauth/token")) {
-            if ($request->hasCookie('refresh_token')) {
-                $token = $request->cookie('refresh_token');
-                $request->request->add(['refresh_token' => $token]);
+            $json = json_decode($response->getContent(), false);
+            if (!$json) {
+                return $response;
+            }
+            $token = $json->refresh_token ?? null;
+            if ($token) {
+                return ($response)->cookie('refresh_token', $token, 15);
             }
         }
-        return $next($request);
+        return $response;
     }
 }
