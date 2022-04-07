@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/user', App\Http\Controllers\V1\Authentication\MeController::class);
-    Route::post('/logout',  App\Http\Controllers\V1\Authentication\LogoutController::class);
+    Route::get('/user', App\Domains\Authentication\Http\Controllers\V1\MeController::class);
+    Route::post('/logout',  App\Domains\Authentication\Http\Controllers\V1\LogoutController::class);
 });
 
 Route::get('test-broadcast', function () {

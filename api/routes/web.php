@@ -7,4 +7,4 @@ Route::get('/', function () {
 });
 
 Route::view('login', 'login');
-Route::post('login', App\Http\Controllers\V1\Authentication\LoginController::class)->name('login');
+Route::post('login', App\Domains\Authentication\Http\Controllers\V1\LoginController::class)->name('login');

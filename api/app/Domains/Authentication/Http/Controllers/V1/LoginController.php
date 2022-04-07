@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Authentication;
+namespace App\Domains\Authentication\Http\Controllers\V1;
 
 use App\Domains\Authentication\Actions\AttemptLoginUserAction;
 use App\Domains\Authentication\Requests\LoginUserRequest;
