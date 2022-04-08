@@ -238,7 +238,7 @@ autoload:
 
 # Install the environment
 # install: build build-laravel env-api migrate install-nuxt env-client restart
-install: cp-envs init-envs build build-laravel build-nuxt build-admin storage perm key restart 
+install: cp-envs init-envs build build-laravel build-nuxt build-admin storage key restart perm
 
 #-----------------------------------------------------------
 # Frameworks installation
@@ -247,7 +247,6 @@ install: cp-envs init-envs build build-laravel build-nuxt build-admin storage pe
 # build laravel
 build-laravel:
 	docker-compose down
-	sudo chown ${USER}:${USER} -R api
 	sudo chgrp -R www-data api/storage api/bootstrap/cache
 	sudo chmod -R 775 api/storage api/bootstrap/cache
 	docker-compose up -d
@@ -257,13 +256,11 @@ build-laravel:
 # Nuxt
 build-nuxt:
 	docker-compose down
-	sudo chown ${USER}:${USER} -R client
 	docker-compose up -d
 
 # Nuxt
 build-admin:
 	docker-compose down
-	sudo chown ${USER}:${USER} -R admin
 	docker-compose up -d
 
 
