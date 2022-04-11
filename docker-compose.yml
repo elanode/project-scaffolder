@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: "ghcr.io/elanode/nginx-docker-dev:latest"
+    image: "ghcr.io/elanode/nginx-docker-dev:v1.2.1"
     volumes:
       - ./:/var/www
       - ./docker/dev/logs/nginx:/var/log/nginx
@@ -10,13 +10,14 @@ services:
       - 3000:80 # Client UI
       - 8000:81 # API
       - 3001:82 # Admin UI
+      - 3003:83 # Websocket
     depends_on:
       - client
       - admin
       - php
 
   php:
-    image: "ghcr.io/elanode/laravel-api-docker-dev:v1.2.0"
+    image: "ghcr.io/elanode/laravel-api-docker-dev:v1.3.0"
     volumes:
       - ./api:/var/www/api
     depends_on:
@@ -25,7 +26,7 @@ services:
       - mailhog
 
   supervisor:
-    image: "ghcr.io/elanode/laravel-api-docker-dev:v1.2.0"
+    image: "ghcr.io/elanode/laravel-api-docker-dev:v1.3.0"
     volumes:
       - ./api:/var/www/api
       - ./docker/dev/logs/supervisor:/var/log
@@ -50,7 +51,6 @@ services:
 
   mysql:
     image: mariadb:10.6
-    restart: always
     volumes:
       - mariadb-data:/var/lib/mysql
       - ./docker/dev/mysql/dumps/:/tmp

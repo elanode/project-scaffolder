@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Domains\Authentication\Seeders\PermissionsSeeder;
+use App\Domains\Authentication\Seeders\RoleSeeder;
+use App\Domains\Authentication\Seeders\UserFakeSeeder;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +17,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RoleSeeder::class,
+            PermissionsSeeder::class
+        ]);
+
+        if (config('app.env') === 'local' || config('app.env') === 'testing') {
+            $this->call([
+                UserFakeSeeder::class
+            ]);
+
+            Artisan::call('passport:install -n');
+            Artisan::call('passport:client --public --user_id=1 --name=nuxtclient --redirect_uri=http://localhost:3000/oauth/login --no-interaction');
+        }
     }
 }

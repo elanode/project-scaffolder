@@ -2,9 +2,27 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  publicRuntimeConfig: {
+    OAUTH_REDIRECT_URI: process.env.OAUTH_REDIRECT_URI,
+    OAUTH_CLIENT_ID: process.env.OAUTH_CLIENT_ID,
+    BROWSER_URL: process.env.BROWSER_URL,
+    BACKEND_URL: process.env.BACKEND_URL,
+    BASE_URL: process.env.BASE_URL,
+    WS_HOST: process.env.WS_HOST,
+    WS_PORT: process.env.WS_PORT,
+    WS_KEY: process.env.WS_KEY,
+    WS_FORCE_TLS: process.env.WS_FORCE_TLS,
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'client-codebrew',
+    title: 'client',
     htmlAttrs: {
       lang: 'en',
     },
@@ -21,7 +39,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/echo', mode: 'client' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -41,7 +59,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.BACKEND_URL,
+    credentials: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
