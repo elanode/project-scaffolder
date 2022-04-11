@@ -51,7 +51,6 @@ services:
 
   mysql:
     image: mariadb:10.6
-    restart: always
     volumes:
       - mariadb-data:/var/lib/mysql
       - ./docker/dev/mysql/dumps/:/tmp
