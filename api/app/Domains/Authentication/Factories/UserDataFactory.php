@@ -3,7 +3,7 @@
 namespace App\Domains\Authentication\Factories;
 
 use App\Domains\Authentication\Dtos\UserDto;
-use App\Domains\Authentication\Requests\UserFormRequest;
+use App\Domains\Authentication\Http\Requests\UserFormRequest;
 
 class UserDataFactory
 {

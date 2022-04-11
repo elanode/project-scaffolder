@@ -22,11 +22,13 @@ class DatabaseSeeder extends Seeder
             PermissionsSeeder::class
         ]);
 
-        $this->call([
-            UserFakeSeeder::class
-        ]);
+        if (config('app.env') === 'local' || config('app.env') === 'testing') {
+            $this->call([
+                UserFakeSeeder::class
+            ]);
 
-        Artisan::call('passport:install -n');
-        Artisan::call('passport:client --public --user_id=1 --name=nuxtclient --redirect_uri=http://localhost:3000/oauth/login --no-interaction');
+            Artisan::call('passport:install -n');
+            Artisan::call('passport:client --public --user_id=1 --name=nuxtclient --redirect_uri=http://localhost:3000/oauth/login --no-interaction');
+        }
     }
 }

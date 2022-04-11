@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Support\Http;
 
+use App\Infrastructure\Http\Requests\Contracts\WithAvailableQueryStringOptionsContract;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -20,9 +22,13 @@ trait ApiResponserTrait
      *
      * @return JsonResponse
      */
-    public function successResponse(mixed $data, null|string $message = null, bool $pagination = false, int $code = 200, null|string $devMessage = null)
+    public function successResponse(mixed $data, null|string $message = null, bool $pagination = false, int $code = 200, null|string $devMessage = null, null|FormRequest $requestClass = null)
     {
         $others = [];
+
+        if ($requestClass instanceof WithAvailableQueryStringOptionsContract) {
+            $others['available_query_strings'] = $requestClass->getQueryStringOptions();
+        }
 
         if ($pagination) {
             $meta = $this->handlePaginationData($data);
@@ -61,6 +67,10 @@ trait ApiResponserTrait
             'data'    => null,
             'code'    => $code,
         ];
+
+        if ($code == 0) {
+            $code = 500;
+        }
 
         if (config('app.env') != 'production') {
             $response['dev_message'] = $devMessage;

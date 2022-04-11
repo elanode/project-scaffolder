@@ -3,7 +3,7 @@
 namespace App\Domains\Authentication\Http\Controllers\V1;
 
 use App\Domains\Authentication\Actions\GetCurrentUserAction;
-use App\Domains\Authentication\Resources\UserResource;
+use App\Domains\Authentication\Http\Resources\UserResource;
 use App\Infrastructure\Http\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

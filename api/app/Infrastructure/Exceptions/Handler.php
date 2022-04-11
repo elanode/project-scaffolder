@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -52,6 +53,7 @@ class Handler extends ExceptionHandler
         /** CUSTOM */
         // $this->renderable(fn (UserActionException $e, $request) => $this->throwableResponse($e));
         $this->renderable(fn (BaseCustomException $e, $request) => $this->throwableResponse($e));
+        $this->renderable(fn (UnauthorizedException $e, $request) => $this->throwableResponse($e, 403));
 
         /** BUILT IN */
         $this->renderable(fn (AuthorizationException $e, $request) => $this->throwableResponse($e, $e->getCode()));

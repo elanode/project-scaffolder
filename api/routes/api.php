@@ -17,3 +17,15 @@ Route::get('test-broadcast', function () {
 Route::get('test-private', function () {
     event(new TestPrivateEvent(1, request('message', 'testing')));
 });
+
+
+Route::prefix('authentication')->name('authentication.')->group(function () {
+    //PUBLIC ROUTES
+
+    //AUTHENTICATED ROUTES
+    Route::middleware('auth:api')->group(function () {
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('', App\Domains\Authentication\Http\Controllers\V1\GetAllUserController::class)->name('index');
+        });
+    });
+});

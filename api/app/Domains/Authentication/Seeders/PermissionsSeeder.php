@@ -27,8 +27,11 @@ class PermissionsSeeder extends Seeder
          * 
          * e.g. 
          * 'authentication' => [
-         *     'register user
+         *     'register user'
          * ]
+         * 
+         * e.g. result
+         * 'authentication register user'
          */
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
@@ -39,7 +42,8 @@ class PermissionsSeeder extends Seeder
         $rolesGroup = [
             RoleEnum::ADMIN->value => [
                 'authentication' => [
-                    'login'
+                    'login',
+                    'get all user'
                 ]
             ],
             RoleEnum::USER->value => [
@@ -48,11 +52,6 @@ class PermissionsSeeder extends Seeder
                 ]
             ]
         ];
-
-        $rolesGroup[RoleEnum::SUPERADMIN->value] = array_merge(
-            $rolesGroup[RoleEnum::ADMIN->value],
-            $rolesGroup[RoleEnum::USER->value],
-        );
 
         foreach ($rolesGroup as $roleName => $group) {
             $createdPermissions = collect();

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Providers;
 
+use App\Domains\Authentication\Enums\RoleEnum;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -25,6 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(RoleEnum::SUPERADMIN->value) ? true : null;
+        });
 
         if (!$this->app->routesAreCached()) {
             Passport::routes(null, ['middleware' => 'passport']);

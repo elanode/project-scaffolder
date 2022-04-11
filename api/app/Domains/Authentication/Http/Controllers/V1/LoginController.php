@@ -3,7 +3,7 @@
 namespace App\Domains\Authentication\Http\Controllers\V1;
 
 use App\Domains\Authentication\Actions\AttemptLoginUserAction;
-use App\Domains\Authentication\Requests\LoginUserRequest;
+use App\Domains\Authentication\Http\Requests\LoginUserRequest;
 use App\Infrastructure\Http\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

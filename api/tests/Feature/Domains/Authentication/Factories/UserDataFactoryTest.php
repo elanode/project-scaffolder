@@ -4,7 +4,7 @@ namespace Tests\Feature\Domains\Authentication\Factories;
 
 use App\Domains\Authentication\Dtos\UserDto;
 use App\Domains\Authentication\Factories\UserDataFactory;
-use App\Domains\Authentication\Requests\UserFormRequest;
+use App\Domains\Authentication\Http\Requests\UserFormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Mockery\MockInterface;
