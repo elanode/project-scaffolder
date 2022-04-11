@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\App\Domains\Authentication\Actions;
+namespace Tests\Feature\Domains\Authentication\Actions;
 
 use App\Domains\Authentication\Actions\AttachPermissionsToRoleAction;
 use App\Domains\Authentication\Models\Permission;
