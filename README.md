@@ -7,11 +7,11 @@
 
 ## Installation
 
-- `make install`
-- `make up`
-- `make php`
-- `php artisan migrate:fresh --seed`
-- `php artisan passport:install`
+- `make init-perms`
+- `sudo make install`
+- `make perm`
+- `sudo make up`
+- `sudo make php`
 - `php artisan passport:client --public` (IF NOT SEEDED, check [`DatabaseSeeder.php`](./api/database/seeders/DatabaseSeeder.php))
   - [prompts] which user ... `1` (this is the superadmin id based on the users database)
   - [prompts] should name client ... `Nuxt Client App` (the name of the new consumer client)
