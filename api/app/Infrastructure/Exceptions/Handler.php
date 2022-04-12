@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -56,6 +57,7 @@ class Handler extends ExceptionHandler
         $this->renderable(fn (UnauthorizedException $e, $request) => $this->throwableResponse($e, 403));
 
         /** BUILT IN */
+        $this->renderable(fn (AccessDeniedHttpException $e, $request) => $this->throwableResponse($e, 403));
         $this->renderable(fn (AuthorizationException $e, $request) => $this->throwableResponse($e, $e->getCode()));
         $this->renderable(fn (ModelNotFoundException $e, $request) => $this->throwableResponse($e, $e->getCode()));
         $this->renderable(fn (NotFoundHttpException $e, $request) => $this->errorResponse('Resource not found', 404));
