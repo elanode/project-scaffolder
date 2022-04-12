@@ -7,12 +7,18 @@
 
 ## Installation
 
+- `make cp-envs`
+- `make init-envs`
 - `make init-perms`
 - `sudo make install`
 - `make perm`
 - `sudo make up`
 - `sudo make php`
-- `php artisan passport:client --public` (IF NOT SEEDED, check [`DatabaseSeeder.php`](./api/database/seeders/DatabaseSeeder.php))
+- `php artisan migrate:fresh --seed`
+
+(IF NOT SEEDED, check [`DatabaseSeeder.php`](./api/database/seeders/DatabaseSeeder.php))
+
+- `php artisan passport:client --public`
   - [prompts] which user ... `1` (this is the superadmin id based on the users database)
   - [prompts] should name client ... `Nuxt Client App` (the name of the new consumer client)
   - [prompts] redirect request after auth ... `http://localhost:3000/oauth/login` (the redirect uri of consumer client used for logging in, setting cookies, etc)

@@ -241,7 +241,7 @@ autoload:
 
 # Install the environment
 # install: build build-laravel env-api migrate install-nuxt env-client restart
-install: cp-envs init-envs build build-laravel build-nuxt build-admin storage key restart perm
+install: build build-laravel build-nuxt build-admin storage key restart
 
 #-----------------------------------------------------------
 # Frameworks installation
