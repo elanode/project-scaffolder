@@ -212,6 +212,9 @@ init-envs:
 	cp envs/.env.api api/.env
 	cp envs/.env.admin admin/.env
 
+init-perms:
+	sudo chown -R ${USER}:${USER} .
+
 cp-envs: env-docker env-client env-api env-admin
 
 # Add permissions for Laravel cache and storage folders
