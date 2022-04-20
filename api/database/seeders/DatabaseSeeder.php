@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Domains\Authentication\Seeders\PermissionsSeeder;
-use App\Domains\Authentication\Seeders\RoleSeeder;
-use App\Domains\Authentication\Seeders\UserFakeSeeder;
+use App\Domains\Authentication\Database\Seeders\PermissionsSeeder;
+use App\Domains\Authentication\Database\Seeders\RoleSeeder;
+use App\Domains\Authentication\Database\Seeders\UserFakeSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 

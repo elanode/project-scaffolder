@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domains\Authentication\Models;
 
+use App\Domains\Authentication\Database\Factories\UserFactory;
+use App\Domains\Authentication\Models\Scopes\UserScopes;
 use App\Support\Traits\HasUuid\HasUuidTrait;
-use Database\Factories\UserFactory;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,6 +26,8 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
+    use UserScopes;
+    use CanResetPassword;
 
     public $guard_name = '*';
 
@@ -39,6 +43,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_terminated'
     ];
 
     /**
@@ -58,6 +63,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_terminated' => 'boolean'
     ];
 
     protected $with = [
@@ -77,5 +83,10 @@ class User extends Authenticatable
     public function hasPermissionTo($permission, $guardName = '*'): bool
     {
         return $this->hasPermissionToOriginal($permission, $guardName);
+    }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'user.' . $this->id;
     }
 }

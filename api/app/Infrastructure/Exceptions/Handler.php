@@ -63,11 +63,15 @@ class Handler extends ExceptionHandler
         $this->renderable(fn (NotFoundHttpException $e, $request) => $this->errorResponse('Resource not found', 404));
 
         $this->renderable(
-            fn (ValidationException $e, $request) => $this->throwableResponse(
-                error: $e,
-                code: 422,
-                data: $e->validator->getMessageBag()
-            )
+            function (ValidationException $e, $request) {
+                if ($request->expectsJson()) {
+                    return $this->throwableResponse(
+                        error: $e,
+                        code: 422,
+                        data: $e->validator->getMessageBag()
+                    );
+                }
+            }
         );
 
         $this->renderable(function (\PDOException $e, $request) {

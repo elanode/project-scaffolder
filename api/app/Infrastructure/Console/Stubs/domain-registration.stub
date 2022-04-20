@@ -1,0 +1,36 @@
+<?php
+
+namespace {{namespace}};
+
+use App\Infrastructure\Registration\RegistrationInterface;
+
+class {{class}} implements RegistrationInterface
+{
+    public static function getPoliciesMap(): array
+    {
+        return [
+            // 'App\Domains\{{domain}}\Models\[Model]' => 'App\Domains\Authentication\Policies\[Policy]',
+        ];
+    }
+
+    public static function getRouteFilePathsMap(): array
+    {
+        return [
+            // base_path('app/Domains/{{domain}}/Routes/[RouteFileName].php'),
+        ];
+    }
+
+    public static function getSharedServiceProvidersNeeded(): array
+    {
+        return [
+            // App\Domains\Shared\Authentication\SharedAuthenticationServiceProvider::class
+        ];
+    }
+
+    public static function getMigrationPaths(): array
+    {
+        return [
+            // 'app/Domains/{{domain}}/Database/Migrations',
+        ];
+    }
+}

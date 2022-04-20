@@ -1,6 +1,37 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
+$providers = [ //START
+    Illuminate\Auth\AuthServiceProvider::class,
+    Illuminate\Broadcasting\BroadcastServiceProvider::class,
+    Illuminate\Bus\BusServiceProvider::class,
+    Illuminate\Cache\CacheServiceProvider::class,
+    Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+    Illuminate\Cookie\CookieServiceProvider::class,
+    Illuminate\Database\DatabaseServiceProvider::class,
+    Illuminate\Encryption\EncryptionServiceProvider::class,
+    Illuminate\Filesystem\FilesystemServiceProvider::class,
+    Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+    Illuminate\Hashing\HashServiceProvider::class,
+    Illuminate\Mail\MailServiceProvider::class,
+    Illuminate\Notifications\NotificationServiceProvider::class,
+    Illuminate\Pagination\PaginationServiceProvider::class,
+    Illuminate\Pipeline\PipelineServiceProvider::class,
+    Illuminate\Queue\QueueServiceProvider::class,
+    Illuminate\Redis\RedisServiceProvider::class,
+    Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+    Illuminate\Session\SessionServiceProvider::class,
+    Illuminate\Translation\TranslationServiceProvider::class,
+    Illuminate\Validation\ValidationServiceProvider::class,
+    Illuminate\View\ViewServiceProvider::class,
+    App\Infrastructure\Providers\AppServiceProvider::class,
+    App\Infrastructure\Providers\AuthServiceProvider::class,
+    App\Infrastructure\Providers\BroadcastServiceProvider::class,
+    App\Infrastructure\Providers\EventServiceProvider::class,
+    App\Infrastructure\Providers\RouteServiceProvider::class,
+    App\Infrastructure\Providers\CustomMigrationProvider::class,
+    App\Domains\Shared\Authentication\SharedAuthenticationServiceProvider::class
+    //END
+];
 
 return [
 
@@ -136,51 +167,7 @@ return [
     |
     */
 
-    'providers' => [
-
-        /*
-         * Laravel Framework Service Providers...
-         */
-        Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
-        Illuminate\Cache\CacheServiceProvider::class,
-        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Cookie\CookieServiceProvider::class,
-        Illuminate\Database\DatabaseServiceProvider::class,
-        Illuminate\Encryption\EncryptionServiceProvider::class,
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        Illuminate\Pagination\PaginationServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
-        Illuminate\Queue\QueueServiceProvider::class,
-        Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-
-        /*
-         * Application Service Providers...
-         */
-        App\Infrastructure\Providers\AppServiceProvider::class,
-        App\Infrastructure\Providers\AuthServiceProvider::class,
-        App\Infrastructure\Providers\BroadcastServiceProvider::class,
-        App\Infrastructure\Providers\EventServiceProvider::class,
-        App\Infrastructure\Providers\RouteServiceProvider::class,
-
-        /**
-     * Domain Service Providers
-     */
-    ],
+    'providers' => $providers,
 
     /*
     |--------------------------------------------------------------------------
@@ -193,8 +180,35 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // ...
-    ])->toArray(),
-
 ];
+
+// $default = [
+//     Illuminate\Auth\AuthServiceProvider::class,
+//     Illuminate\Broadcasting\BroadcastServiceProvider::class,
+//     Illuminate\Bus\BusServiceProvider::class,
+//     Illuminate\Cache\CacheServiceProvider::class,
+//     Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+//     Illuminate\Cookie\CookieServiceProvider::class,
+//     Illuminate\Database\DatabaseServiceProvider::class,
+//     Illuminate\Encryption\EncryptionServiceProvider::class,
+//     Illuminate\Filesystem\FilesystemServiceProvider::class,
+//     Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+//     Illuminate\Hashing\HashServiceProvider::class,
+//     Illuminate\Mail\MailServiceProvider::class,
+//     Illuminate\Notifications\NotificationServiceProvider::class,
+//     Illuminate\Pagination\PaginationServiceProvider::class,
+//     Illuminate\Pipeline\PipelineServiceProvider::class,
+//     Illuminate\Queue\QueueServiceProvider::class,
+//     Illuminate\Redis\RedisServiceProvider::class,
+//     Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+//     Illuminate\Session\SessionServiceProvider::class,
+//     Illuminate\Translation\TranslationServiceProvider::class,
+//     Illuminate\Validation\ValidationServiceProvider::class,
+//     Illuminate\View\ViewServiceProvider::class,
+//     App\Infrastructure\Providers\AppServiceProvider::class,
+//     App\Infrastructure\Providers\AuthServiceProvider::class,
+//     App\Infrastructure\Providers\BroadcastServiceProvider::class,
+//     App\Infrastructure\Providers\EventServiceProvider::class,
+//     App\Infrastructure\Providers\RouteServiceProvider::class,
+//     App\Infrastructure\Providers\CustomMigrationProvider::class,
+// ];

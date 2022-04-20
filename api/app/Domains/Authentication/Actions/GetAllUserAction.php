@@ -13,10 +13,14 @@ class GetAllUserAction
         array $withs = ['roles'],
         string $orderColumn = 'created_at',
         SortDirectionEnum $sortDirection = SortDirectionEnum::DESC,
-        int $paginate = 50
+        int $paginate = 50,
+        bool $notSuperadmin = true
     ): LengthAwarePaginator {
         return User::query()
             ->with($withs)
+            ->when($notSuperadmin, function ($query) {
+                $query->withoutSuperAdmins();
+            })
             ->orderBy($orderColumn, $sortDirection->value)
             ->paginate($paginate);
     }

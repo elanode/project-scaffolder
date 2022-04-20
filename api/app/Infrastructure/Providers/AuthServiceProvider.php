@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Providers;
 
 use App\Domains\Authentication\Enums\RoleEnum;
+use App\Infrastructure\Registration\DomainsRegistration;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -14,9 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array<class-string, class-string>
      */
-    protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-    ];
+    protected $policies = [];
 
     /**
      * Register any authentication / authorization services.
@@ -25,6 +24,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->policies = DomainsRegistration::getAllRegisteredDomainsPolicy();
+
         $this->registerPolicies();
 
         Gate::before(function ($user, $ability) {

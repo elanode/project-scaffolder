@@ -8,11 +8,22 @@ use App\Domains\Authentication\Models\User;
 
 class AttachRoleToUserAction
 {
-    public function run(int $userId, RoleEnum ...$roleEnums): void
+    /**
+     * Undocumented function
+     *
+     * @param  int    $userId
+     * @param  array|RoleEnum ...$roleEnums
+     *
+     * @return void
+     */
+    public function run(int $userId, ...$roleEnums): void
     {
         $user = User::findOrFail($userId);
-        foreach ($roleEnums as $roleEnum) {
-            $user->assignRole($roleEnum->value);
-        }
+        $roleNames = collect($roleEnums)
+            ->flatten()
+            ->map(fn (RoleEnum $roleEnum) => $roleEnum->value)
+            ->toArray();
+
+        $user->assignRole($roleNames);
     }
 }
